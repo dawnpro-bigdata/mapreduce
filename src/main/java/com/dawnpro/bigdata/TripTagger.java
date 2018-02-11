@@ -32,7 +32,7 @@ public class TripTagger {
     }
 
     public static class TagReducer
-            extends Reducer<Text,IntWritable,Text,Text> {
+            extends Reducer<Text,Text,Text,Text> {
 
         public void reduce(Text key, Iterable<Text> values,
                            Context context
@@ -56,12 +56,11 @@ public class TripTagger {
             System.exit(2);
         }
         Job job = Job.getInstance(conf, "TripTagger");
-        job.setJarByClass(WordCount.class);
-        job.setMapperClass(WordCount.TokenizerMapper.class);
-        job.setCombinerClass(WordCount.IntSumReducer.class);
-        job.setReducerClass(WordCount.IntSumReducer.class);
+        job.setJarByClass(TripTagger.class);
+        job.setMapperClass(TripTagger.TokenizerMapper.class);
+        job.setReducerClass(TripTagger.TagReducer.class);
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(Text.class);
         for (int i = 0; i < otherArgs.length - 1; ++i) {
             FileInputFormat.addInputPath(job, new Path(otherArgs[i]));
         }
