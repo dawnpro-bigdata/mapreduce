@@ -106,11 +106,11 @@ public class TboxRecord implements Comparable{
         TboxRecord otherRecord = (TboxRecord)o;
         long otherTime = otherRecord.time.getTime();
         if(this.time.getTime() > otherTime) {
-            return -1;
+            return 1;
         } else if (this.time.getTime() == otherTime) {
            return 0;
         } else {
-           return 1;
+           return -1;
         }
     }
 }
